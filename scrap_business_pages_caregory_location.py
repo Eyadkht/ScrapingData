@@ -42,8 +42,13 @@ def request_data_from_url(url):
     return response.read()
 
 """
-INPUTS: 
+INPUTS:
     access_token: authentication proving that you have a valid facebook account
+    location_name: Name of the location
+    location_lat: Latitude to start search from
+    location_lat: Longitude to start search from
+    radius_of_search: Radius of search
+    category: Category of places to search for
 OUTPUTS:
     a python dictionary of the data on the requested nearby places
 """
@@ -67,10 +72,9 @@ def get_nearby_places_data(access_token,location_lat,location_long,radius_of_sea
     return data
 """
 INPUTS: 
-    post: information about a single post on the facebook page
-    access_token: authentication proving that you have a valid facebook account
+    place: name of the place found in search
 OUTPUTS: 
-    a list with the requested fields for this post
+    a list with the requested fields for this place
 """
 def process_post(place):
     
@@ -150,6 +154,11 @@ def process_post(place):
 """
 INPUTS:
     access_token: authentication proving that you have a valid facebook account
+    location_name: Name of the location
+    location_lat: Latitude to start search from
+    location_lat: Longitude to start search from
+    radius_of_search: Radius of search
+    category: Category of places to search for
 OUTPUTS:
     nothing, simply prints how many places were processed and how long it took
 """
@@ -200,39 +209,23 @@ def scrape_nearby_places(access_token,location_name,location_lat,location_long,r
         print ("Completed!\n%s Places Processed in %s" % \
                 (num_processed, datetime.datetime.now() - scrape_starttime))
         
-access_token = "1696785713876555|tGsDow1IpAkzEgVpY9UwQOkjdz4"
+access_token = ""
 
 if __name__ == '__main__':
   radius_of_search="40000"
-#  Syria_locations={"Eindhoven":["51.4485569","5.4501225"],
-#                   "Homs":["34.7324273","36.713696"],
-#                   "Aleppo":["36.2021047","37.13426"],
-#                   "Lattakia":["35.5407103","35.795267"],
-#                   "Tartous":["34.8959276","35.886652"],
-#                   "Hama":["35.1408881","36.755199"],
-#                   "Sweida":["32.712897","36.566286"],
-#                   "Daraa":["32.626434","36.1033061"],
-#                   "Hasakeh":["36.507867","40.746267"],
-#                   "Deir-ez-zor":["35.3296518","40.1350340"],
-#                   "Raqqa":["35.9594106","38.998105"]
-#          }
+
+ locations={"X":["42.6038321","-122.3300624"],
+                  "Y":["33.9527237","-75.1635262"],
+                  "Z":["55.9133301","10.7389701"],
+                  "W":["46.5052","-81.6934"]
+         }
+
+ categories={"FOOD_BEVERAGE","ARTS_ENTERTAINMENT",
+             "EDUCATION","FITNESS_RECREATION","HOTEL_LODGING",
+              "SHOPPING_RETAIL","TRAVEL_TRANSPORTATION","MEDICAL_HEALTH"}
   
-  Syria_locations={"Oslo":["59.9133301","10.7389701"]
-          }
-#  
-#  Syria_locations={"Seattle":["47.6038321","-122.3300624"],
-#                   "Philadelphia":["39.9527237","-75.1635262"],
-#                   "Oslo":["59.9133301","10.7389701"],
-#                   "Cleavland":["41.5052","-81.6934"]
-#          }
-  categories={"FOOD_BEVERAGE"}
- # categories={"FOOD_BEVERAGE","ARTS_ENTERTAINMENT",
-             # "EDUCATION","FITNESS_RECREATION","HOTEL_LODGING",
-              #"SHOPPING_RETAIL","TRAVEL_TRANSPORTATION"}#
-  
-  #"MEDICAL_HEALTH",
 for category in categories:
-    for key, value in Syria_locations.items():
+    for key, value in locations.items():
        scrape_nearby_places(access_token,key,value[0],value[1],radius_of_search,category) 
 
  
